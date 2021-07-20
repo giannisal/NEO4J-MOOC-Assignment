@@ -1,0 +1,37 @@
+QUERY 2
+
+MATCH (n:USER)-[a]-> (t:TARGET)
+WITH count(DISTINCT n) AS users, count(a) AS actions, COUNT(distinct t) AS targets
+RETURN users, actions, targets
+
+QUERY 3
+
+MATCH (n:USER)-[a]-> (t:TARGET)
+WHERE n.id='5797'
+RETURN n.ID, a.ID, t.ID
+
+query 4
+
+MATCH (n:USER)
+RETURN n.ID, size((n)-->()) AS count
+
+QUERY 5
+
+MATCH (t:TARGET)
+RETURN t.ID, size(()-->(t)) AS count
+
+QUERY 6
+
+MATCH (U:USER)
+WITH U, SIZE((U)-->()) AS COUNT
+RETURN AVG(COUNT) AS AVERAGE
+
+QUERY 7
+MATCH (u:USER)-[a]->(t:TARGET)
+WHERE a.f2 >0
+RETURN u.ID, t.ID
+
+QUERY 8
+
+MATCH (u:USER)-[a:DROPPED]->(t:TARGET)
+RETURN t.ID, count(()-[a:DROPPED]->(t)) AS count
